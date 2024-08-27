@@ -1,7 +1,9 @@
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { setProfileFormData } from "../../store/profileSlice";
-import { setTitle } from "../../store/UiSlice";
+import { setisProfile, setProfileFormData } from "../../store/profileSlice";
+import {  setProfileFormOpen, setTitle } from "../../store/UiSlice";
+import { toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 export const useProfileData = () => {
   const idToken = useSelector((state) => state.Auth.idToken);
@@ -18,11 +20,26 @@ export const useProfileData = () => {
           returnSecureToken: false,
         }
       );
+      dispatch(setisProfile(response.data.displayName));
+      dispatch(setProfileFormOpen());
       console.log(response.data)
 
-      alert("Your Profile has Successfully updated");
+      toast.success("Your Profile has Successfully updated");
     } catch (error) {
-      console.log(error);
+     if(error.response){
+      const errorMessage= error.response.data.message || "Unable to Update Profile Data !! Please Try Again."
+      toast.error(errorMessage)
+      
+     }
+     else if(error.request){
+      toast.error(
+        "Network error: No response received. Please check your internet connection."
+      );
+     }
+     else{
+      toast.error("Error:" ,error.message);
+      
+     }
     }
   };
 
@@ -34,23 +51,37 @@ export const useProfileData = () => {
           idToken: idToken,
         }
       );
-      
+
       const userData = response?.data?.users[0];
-      
+      console.log(userData)
+
       if (response.status === 200 && userData) {
         dispatch(setProfileFormData(userData));
-        
+        dispatch(setisProfile(userData.displayName));
+
         const isProfileComplete = userData.displayName && userData.photoUrl;
         const profileTitle = isProfileComplete
           ? "Your Profile Has Completed"
           : "Your Profile is Incomplete";
 
         dispatch(setTitle(profileTitle));
-        
       }
     } catch (error) {
-      console.log(error);
-    }
+      if(error.response){
+       const errorMessage= error.response.data.message || "Unable to Fetch Profile Data !! Please Try Again."
+       toast.error(errorMessage)
+       
+      }
+      else if(error.request){
+       toast.error(
+         "Network error: No response received. Please check your internet connection."
+       );
+      }
+      else{
+       toast.error("Error:" ,error.message);
+       
+      }
+     }
   };
 
   return { updateProfileData, getUserData };

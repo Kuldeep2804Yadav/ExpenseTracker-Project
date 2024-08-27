@@ -1,11 +1,21 @@
 import React, { useEffect } from "react";
 import ExpenseForm from "./ExpenseForm";
 import ExpenseList from "./ExpenseList";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchExpenseList } from "../../store/expenseSlice";
+import {useDispatch, useSelector } from "react-redux";
+import { setTotalAmount } from "../../store/expenseSlice";
+
 
 const Expense = () => {
   const expenseList = useSelector((state) => state.expense.expenseList);
+  const dispatch= useDispatch();
+ 
+  useEffect(()=> {
+    dispatch(setTotalAmount(expenseList));
+
+  },[expenseList,dispatch])
+
+  
+ 
  
   
 

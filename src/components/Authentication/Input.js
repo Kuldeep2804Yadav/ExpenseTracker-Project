@@ -24,6 +24,7 @@ const Input = ({ AuthenticationHandler }) => {
     if (!login) {
       if (AuthFormData.password !== AuthFormData.confirmPassword) {
         alert("Password and Confirm Password should be the same");
+        return AuthFormData
       } else {
         console.log(AuthFormData);
       }

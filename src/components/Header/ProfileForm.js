@@ -9,11 +9,13 @@ import { setProfileFormData } from "../../store/profileSlice";
 
 const ProfileForm = () => {
   const dispatch = useDispatch();
+  const { getUserData } = useProfileData();
   const profileFormIsOpen = useSelector((state) => state.ui.profileFormIsOpen);
   const profileFormData = useSelector((state) => state.profile.profileFormData);
   const idToken = useSelector((state) => state.Auth.idToken);
 
-  const { updateProfileData, getUserData } = useProfileData();
+  const { updateProfileData} = useProfileData();
+ 
 
   const changeHandler = (e) => {
     const { value, name } = e.target;
@@ -29,18 +31,13 @@ const ProfileForm = () => {
   const profileFormCloseHandler = () => {
     dispatch(setProfileFormOpen());
   };
-  useEffect(() => {
-    if (idToken) {
-      getUserData(idToken);
-    }
-  }, []);
-
+ 
   return (
     <>
       {profileFormIsOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50 ">
           <form
-            className="relative bg-white shadow-2xl rounded-lg p-6 w-full max-w-lg"
+            className="relative bg-white shadow-2xl rounded-lg p-6 w-full max-w-lg dark:border-none  dark:bg-gray-700 dark:text-white"
             onSubmit={profileFormSubmitHandler}
           >
             <div className="flex justify-between items-center border-b pb-4 mb-4">
@@ -62,7 +59,7 @@ const ProfileForm = () => {
               <input
                 id="name"
                 type="text"
-                className="border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-400"
+                className="border border-gray-300 rounded-lg p-2 w-full  dark:bg-gray-700 dark:focus:ring-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
                 value={profileFormData.displayName}
                 name="displayName"
                 onChange={changeHandler}
@@ -79,7 +76,7 @@ const ProfileForm = () => {
               <input
                 id="image"
                 type="text"
-                className="border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-400"
+                className="border border-gray-300 rounded-lg p-2 w-full  dark:bg-gray-700 dark:focus:ring-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
                 value={profileFormData.photoUrl}
                 name="photoUrl"
                 onChange={changeHandler}

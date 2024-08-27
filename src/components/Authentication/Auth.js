@@ -1,16 +1,14 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Input from "./Input";
 import { useDispatch, useSelector } from "react-redux";
-import { loginHandler,setLocalId,setLogin } from "../../store/AuthSlice";
+import { loginHandler, setLocalId, setLogin } from "../../store/AuthSlice";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Auth = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const login = useSelector((state) => state.Auth.login);
-  const isLoggedIn = useSelector((state) => state.Auth.isLoggedIn);
-
   const loginStateHandler = () => {
     dispatch(setLogin());
   };
@@ -22,21 +20,37 @@ const Auth = () => {
   const AuthenticationHandler = async (AuthFormData) => {
     try {
       const response = await axios.post(url, AuthFormData);
-      console.log(response.data);
 
-      if (login) {
-        dispatch(loginHandler(response.data.idToken));
-        dispatch(setLocalId(response.data.localId));
-       
+      if (response.status !== 200) {
+        throw new Error("Something Went Wrong!!");
+      } else {
+        if (login) {
+          dispatch(loginHandler(response.data.idToken));
+          dispatch(setLocalId(response.data.localId));
+          toast.success("Login Successfully");
+        } else {
+          toast.success("You are Registered Successfully");
+          dispatch(setLogin());
+        }
       }
     } catch (error) {
+      if (error.response) {
+        const errorMessage =
+          error.response.data.error.message ||
+          "Something went wrong. Please try again.";
+
+        toast.error(`Error: ${errorMessage}`);
+      } else if (error.request) {
+        toast.error(
+          "Network error: No response received. Please check your internet connection."
+        );
+      } else {
+        toast.error(`Error: ${error.message}`);
+      }
+
       console.error("Authentication failed:", error);
-      alert("Authentication failed. Please try again.");
     }
   };
-
-
-
   return (
     <div className="bg-white w-screen h-screen flex flex-col items-center justify-center">
       <div className="w-full max-w-md px-8">

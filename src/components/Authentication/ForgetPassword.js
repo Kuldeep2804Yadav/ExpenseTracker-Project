@@ -2,6 +2,8 @@ import axios from "axios";
 import React, { useRef } from "react";
 import Button from "../UI/Button";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 const ForgetPassword = () => {
   const navigate = useNavigate();
@@ -21,15 +23,15 @@ const ForgetPassword = () => {
       );
 
       if (response.status === 200) {
-        alert("Check your email for password reset instructions.");
+        toast.success("Check your email for password reset instructions.");
         navigate("/auth");
       } else {
-        alert("Failed to send password reset email. Please try again.");
+        toast.error("Failed to send password reset email. Please try again.");
       }
       
     } catch (error) {
       console.error("Error sending password reset email:", error);
-      alert("Failed to send password reset email. Please try again.");
+      toast.error("Failed to send password reset email. Please try again.");
     } finally {
       emailRef.current.value = "";
     }

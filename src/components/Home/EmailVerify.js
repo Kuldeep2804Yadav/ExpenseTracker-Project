@@ -24,7 +24,7 @@ const EmailVerify = () => {
 
   };
   return (
-    <div className=" w-2/6 h-max bg-white shadow-lg flex flex-col items-center justify-center m-auto mt-12 py-2 px-10  ">
+    <div className=" w-2/6 h-max  bg-white shadow-lg  rounded-lg dark:border-none  dark:bg-gray-700 dark:text-white flex flex-col items-center justify-center m-auto mt-12 py-2 px-10  ">
     <p className="font-bold text-2xl">Thank for Signing up</p>
       <h1 className="font-bold text-2xl my-5">Verify Your Email Address</h1>
       
