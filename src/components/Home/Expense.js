@@ -1,24 +1,16 @@
 import React, { useEffect } from "react";
 import ExpenseForm from "./ExpenseForm";
 import ExpenseList from "./ExpenseList";
-import {useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setTotalAmount } from "../../store/expenseSlice";
-
 
 const Expense = () => {
   const expenseList = useSelector((state) => state.expense.expenseList);
-  const dispatch= useDispatch();
- 
-  useEffect(()=> {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
     dispatch(setTotalAmount(expenseList));
-
-  },[expenseList,dispatch])
-
-  
- 
- 
-  
-
+  }, [expenseList, dispatch]);
   return (
     <div className=" w-full h-screen mt-8  ">
       <ExpenseForm />
@@ -28,5 +20,4 @@ const Expense = () => {
     </div>
   );
 };
-
 export default Expense;

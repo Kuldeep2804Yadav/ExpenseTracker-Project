@@ -1,7 +1,11 @@
 import React, { useEffect } from "react";
 import Button from "../UI/Button";
 import { useDispatch, useSelector } from "react-redux";
-import { setProfileFormOpen, setVerify, setDarkTheme } from "../../store/UiSlice";
+import {
+  setProfileFormOpen,
+  setVerify,
+  setDarkTheme,
+} from "../../store/UiSlice";
 import { useNavigate } from "react-router-dom";
 import { logout } from "../../store/AuthSlice";
 import { FaSun, FaMoon } from "react-icons/fa";
@@ -19,7 +23,6 @@ const Header = () => {
   const isProfile = useSelector((state) => state.profile.isProfile);
   const localId = useSelector((state) => state.Auth.localId);
 
- 
   useEffect(() => {
     if (darktheme) {
       document.documentElement.classList.add("dark");
@@ -49,7 +52,6 @@ const Header = () => {
     navigate("/auth");
   };
 
- 
   const darkModeHandler = () => {
     dispatch(setDarkTheme(!darktheme));
   };
@@ -68,7 +70,7 @@ const Header = () => {
               alt="userProfile"
               className="w-8 h-8 rounded-full mr-2 border border-black border-4 dark:border-none"
             />
-            <h1>{profileFormData.displayName}</h1>
+            <h1 className="font-bold text-lg">{profileFormData.displayName}</h1>
           </button>
         ) : (
           <div className="mr-3">
@@ -81,7 +83,6 @@ const Header = () => {
           </div>
         )}
 
-       
         {totalAmount >= 10000 && (
           <Button
             className="px-3 ml-1 mr-2 text-bold text-xl"
@@ -89,12 +90,14 @@ const Header = () => {
             onClick={darkModeHandler}
           />
         )}
+        {!profileFormData.emailVerified && (
+          <Button
+            title="Verify Email"
+            onClick={verifyEmailHandler}
+            className="bg-blue-500 px-3 mr-4"
+          />
+        )}
 
-        <Button
-          title="Verify Email"
-          onClick={verifyEmailHandler}
-          className="bg-blue-500 px-3 mr-4"
-        />
         <Button
           className="bg-blue-500 px-3 ml-2 mr-4"
           title="Logout"

@@ -103,10 +103,10 @@ const ExpenseForm = () => {
           className="w-full px-4 py-2 dark:bg-gray-700 dark:focus:ring-gray-300 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
         >
           <option value="">Choose a Category</option>
-          <option value="Gym">Transportation</option>
-          <option value="Recharge">Healthcare</option>
+          <option value="Transportation">Transportation</option>
+          <option value="Healthcare">Healthcare</option>
           <option value="Food">Food</option>
-          <option value="Kitchen">Savings & Investments</option>
+          <option value="Savings & Investments">Savings & Investments</option>
           <option value="Clothes">Clothes</option>
           <option value="Education">Education</option>
           <option value="Housing">Housing</option>

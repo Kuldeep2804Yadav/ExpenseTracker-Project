@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Button from "../UI/Button";
 import { FaGithub } from "react-icons/fa";
 import { TbWorld } from "react-icons/tb";
@@ -9,10 +9,10 @@ import { setProfileFormData } from "../../store/profileSlice";
 
 const ProfileForm = () => {
   const dispatch = useDispatch();
-  const { getUserData } = useProfileData();
+ 
   const profileFormIsOpen = useSelector((state) => state.ui.profileFormIsOpen);
   const profileFormData = useSelector((state) => state.profile.profileFormData);
-  const idToken = useSelector((state) => state.Auth.idToken);
+ 
 
   const { updateProfileData} = useProfileData();
  
